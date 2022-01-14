@@ -14,7 +14,8 @@ interface DashboardProps {
   openForm: (id: string) => void,
   closeForm: () => void,
   createOrEditActivity: (activity: Activity) => void,
-  deleteActivity: (id: string) => void
+  deleteActivity: (id: string) => void,
+  submitting: boolean
 }
 
 export default function ActivityDashboard(props: DashboardProps) {
@@ -27,13 +28,14 @@ export default function ActivityDashboard(props: DashboardProps) {
     openForm,
     closeForm,
     createOrEditActivity,
-    deleteActivity
+    deleteActivity,
+    submitting
   } = props;
 
   return (
     <Grid>
       <Grid.Column width='10'>
-        <ActivityList activities={activities} selectActivity={selectActivity} deleteActivity={deleteActivity}/>
+        <ActivityList submitting={submitting} activities={activities} selectActivity={selectActivity} deleteActivity={deleteActivity}/>
       </Grid.Column>
       <Grid.Column width={'6'}>
         {
@@ -42,7 +44,7 @@ export default function ActivityDashboard(props: DashboardProps) {
         }
         {
           editMode &&
-            <ActivityForm createOrEditActivity={createOrEditActivity} activity={selectedActivity} closeForm={closeForm}/>
+            <ActivityForm submitting={submitting} createOrEditActivity={createOrEditActivity} activity={selectedActivity} closeForm={closeForm}/>
         }
       </Grid.Column>
     </Grid>
