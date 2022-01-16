@@ -1,21 +1,19 @@
 import React, {SyntheticEvent, useState} from "react";
-import {Activity} from "../../../app/models/activity";
 import {Button, Item, Label, Segment} from "semantic-ui-react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-  activities: Activity[],
-  selectActivity: (id: string) => void,
-  deleteActivity: (id: string) => void,
-  submitting: boolean
-}
-
-export default function ActivityList(props: Props) {
+function ActivityList() {
   const {
-    activities,
-    submitting,
+    activityStore
+  } = useStore();
+
+  const {
     selectActivity,
-    deleteActivity
-  } = props;
+    deleteActivity,
+    loading,
+    activitiesByDate
+  } = activityStore;
 
   const [target, setTarget] = useState('');
   function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -27,7 +25,7 @@ export default function ActivityList(props: Props) {
     <Segment>
       <Item.Group divided>
         {
-          activities.map(a => (
+          activitiesByDate.map(a => (
             <Item key={a.id}>
               <Item.Content>
                 <Item.Header as='a'>{a.title}</Item.Header>
@@ -38,7 +36,7 @@ export default function ActivityList(props: Props) {
                 </Item.Description>
                 <Item.Extra>
                   <Button floated='right' content='View' color='blue' onClick={() => selectActivity(a.id)}/>
-                  <Button name={a.id} floated='right' content='Delete' color='red' onClick={(e) => handleActivityDelete(e, a.id)} loading={submitting && target===a.id}/>
+                  <Button name={a.id} floated='right' content='Delete' color='red' onClick={(e) => handleActivityDelete(e, a.id)} loading={loading && target===a.id}/>
                   <Label basic content={a.category}/>
                 </Item.Extra>
               </Item.Content>
@@ -49,3 +47,5 @@ export default function ActivityList(props: Props) {
     </Segment>
   )
 }
+
+export default observer(ActivityList);
