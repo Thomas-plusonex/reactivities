@@ -38,6 +38,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                 <p>{activity.date}</p>
                 <p>
                   Hosted by <strong>Bob</strong>
+                  This is a change, to try and test something
                 </p>
               </Item.Content>
             </Item>
