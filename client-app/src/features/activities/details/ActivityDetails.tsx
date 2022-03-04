@@ -41,6 +41,9 @@ function ActivityDetails () {
 
       <Grid.Column width={6}>
         <ActivityDetailedSidebar />
+        Yeet
+        Yote
+        Joy 
       </Grid.Column>
     </Grid>
   );
